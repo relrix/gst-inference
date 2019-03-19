@@ -130,7 +130,9 @@ gst_classification_overlay_process_meta (GstVideoFrame * frame, GstMeta * meta,
       cv::getTextSize (str, cv::FONT_HERSHEY_TRIPLEX, thickness, font_scale,
       &baseline);
   /* Put string on screen */
-  cv_mat = cv::Mat (height, width, CV_8UC3, (char *) frame->data[0]);
+  cv_mat =
+      cv::Mat (height, width, CV_MAKETYPE (CV_8U,
+          GST_VIDEO_FRAME_N_COMPONENTS (frame)), (char *) frame->data[0]);
   cv::putText (cv_mat, str, cv::Point (0, size.height), cv::FONT_HERSHEY_PLAIN,
       font_scale, white, thickness + 1);
   cv::putText (cv_mat, str, cv::Point (0, size.height), cv::FONT_HERSHEY_PLAIN,

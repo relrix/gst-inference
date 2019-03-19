@@ -116,7 +116,9 @@ gst_detection_overlay_process_meta (GstVideoFrame * frame, GstMeta * meta,
   height = GST_VIDEO_FRAME_HEIGHT (frame);
 
   detect_meta = (GstDetectionMeta *) meta;
-  cv_mat = cv::Mat (height, width, CV_8UC3, (char *) frame->data[0]);
+  cv_mat =
+      cv::Mat (height, width, CV_MAKETYPE (CV_8U,
+          GST_VIDEO_FRAME_N_COMPONENTS (frame)), (char *) frame->data[0]);
   for (i = 0; i < detect_meta->num_boxes; ++i) {
     box = detect_meta->boxes[i];
 
